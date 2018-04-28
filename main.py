@@ -4,7 +4,7 @@ from utils import avg
 
 from game_mechanisms import init_min_cards_by_turn, \
                             create_stacks, \
-                            init_hands_and_stock, \
+                            init_hands_and_deck, \
                             finished, \
                             apply_strat, \
                             draw, \
@@ -31,16 +31,16 @@ def test_strategy(strat):
     '''
     init_min_cards_by_turn()
     stacks = create_stacks()
-    hands, stock = init_hands_and_stock()
-    old_score = score(hands, stock)
+    hands, deck = init_hands_and_deck()
+    old_score = score(hands, deck)
     while not finished(hands, stacks):
         apply_strat(strat, hands[0], stacks)
-        draw(hands, stock)
+        draw(hands, deck)
         rotate_hands(hands)
-        tmp_score = score(hands, stock)
+        tmp_score = score(hands, deck)
         assert old_score > tmp_score
         old_score = tmp_score
-    return score(hands, stock)
+    return score(hands, deck)
 
 
 def show_results(strat_name, scores, show_hist=True):

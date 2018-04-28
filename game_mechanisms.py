@@ -22,7 +22,7 @@ def create_stacks():
     ]
 
 
-def init_hands_and_stock():
+def init_hands_and_deck():
     cards = list(range(2, 100))
     rd.shuffle(cards)
     hands = [[cards.pop(0) for card in range(CARDS_BY_HAND)]
@@ -86,13 +86,12 @@ def hand_all_actions(hand, stacks, min_cards=min_cards_by_turn, max_rec_lvl=6):
     min_cards_by_turn is a global variable indicating how many
     cards at least one player has to play in order to complete
     his turn. In the original game, this value starts at 2, then
-    lowers to 2 when all cards have been picked from the stock.
+    lowers to 2 when all cards have been picked from the deck.
 
     min_cards is a local variable indicating how many cards
     at least should be placed in order to complete the turn.
     This value is decreased when the function calls recursively.
     '''
-    # TODO explain more clearly
     if not hand or max_rec_lvl == 0:
         return []
     actions = []
@@ -115,7 +114,7 @@ def finished(hands, stacks):
 
 def apply_strat(strat, hand, stacks):
     '''
-    apply_strat does not need stock nor more than one hand,
+    apply_strat does not need deck nor more than one hand,
     and should not be given this information.
     '''
     chosen_action = strat(hand[:], stacks[:])
@@ -123,9 +122,9 @@ def apply_strat(strat, hand, stacks):
     return chosen_action
 
 
-def draw(hands, stock):
+def draw(hands, deck):
     '''
-    Draw as many cards in stock as needed to reach CARDS_BY_HAND card in hand.
+    Draw as many cards in deck as needed to reach CARDS_BY_HAND card in hand.
     If the deck is empty, min_cards_by_turn is set to 1 as stated by the rules.
     >>> CARDS_BY_HAND = 6
     >>> hands = [[3, 4, 5]]
@@ -135,9 +134,9 @@ def draw(hands, stock):
     '''
     global min_cards_by_turn
     hand = hands[0]
-    while stock and len(hand) < CARDS_BY_HAND:
-        hand.append(stock.pop(-1))
-    if not stock:
+    while deck and len(hand) < CARDS_BY_HAND:
+        hand.append(deck.pop(-1))
+    if not deck:
         min_cards_by_turn = 1
 
 
@@ -146,8 +145,8 @@ def rotate_hands(hands):
     hands.append(hand)
 
 
-def score(hands, stock):
-    return sum(len(hand) for hand in hands) + len(stock)
+def score(hands, deck):
+    return sum(len(hand) for hand in hands) + len(deck)
 
 
 if __name__ == '__main__':
