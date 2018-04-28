@@ -89,5 +89,11 @@ def multi_test(strat_name,
 if __name__ == '__main__':
     doctest.testmod()
 
-    multi_test('random strategy', random_strategy)
-    multi_test('minimizing height strategy', minimize_height_strategy)
+    multi_test('random strategy',
+               random_strategy,
+               use_mp=False,
+               show_hist=False)
+    multi_test('minimizing height strategy',
+               minimize_height_strategy,
+               use_mp=False,
+               show_hist=False)

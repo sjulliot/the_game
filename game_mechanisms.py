@@ -78,7 +78,7 @@ def hand_allowed_placements(hand, stacks):
     return res
 
 
-def hand_all_actions(hand, stacks, min_cards=min_cards_by_turn):
+def hand_all_actions(hand, stacks, min_cards=min_cards_by_turn, max_rec_lvl=6):
     '''
     given a hand and the current state of the stacks, return
     the list of all possible actions.
@@ -93,7 +93,7 @@ def hand_all_actions(hand, stacks, min_cards=min_cards_by_turn):
     This value is decreased when the function calls recursively.
     '''
     # TODO explain more clearly
-    if not hand:
+    if not hand or max_rec_lvl == 0:
         return []
     actions = []
     allowed_placements = hand_allowed_placements(hand, stacks)
@@ -102,7 +102,7 @@ def hand_all_actions(hand, stacks, min_cards=min_cards_by_turn):
         actions += [[placement] for placement in allowed_placements]
     for placement in allowed_placements:
         apply_action(hand, [placement])
-        for action_end in hand_all_actions(hand, stacks, min_cards - 1):
+        for action_end in hand_all_actions(hand, stacks, min_cards - 1, max_rec_lvl - 1):
             actions.append([placement] + action_end)
         undo_action(hand, [placement])
     return actions
