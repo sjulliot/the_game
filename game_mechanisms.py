@@ -86,7 +86,7 @@ def hand_all_actions(hand, stacks, min_cards=min_cards_by_turn, max_rec_lvl=6):
     min_cards_by_turn is a global variable indicating how many
     cards at least one player has to play in order to complete
     his turn. In the original game, this value starts at 2, then
-    lowers to 2 when all cards have been picked from the deck.
+    lowers to 1 when all cards have been picked from the deck.
 
     min_cards is a local variable indicating how many cards
     at least should be placed in order to complete the turn.
